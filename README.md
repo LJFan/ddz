@@ -58,17 +58,20 @@ Oppo OnePlay:
 
 # 示例
 ## 输入双方初始手牌
+![#](./example/1.jpg)
 ```
 Input Your Cards: KQJ9555443
 Input Oppo Cards: YXKQJ0866643
 ```
 ## 显示必胜和方案/必败
+![#](./example/2.jpg)
 ```
 >                 <
 >-----------------<
 [Win] (FeiJi2, 55544) 
 ```
 ## 输入每一轮的出牌
+![#](./example/3.jpg)
 ```
 Your OnePlay: 55544
 Oppo OnePlay: YX
@@ -79,6 +82,7 @@ Oppo Cards: KQJ0866643
 
 ## 如此循环
 直到一方牌出完
+![#](./example/4.jpg)
 ```
 > <
 >-<
