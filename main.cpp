@@ -53,11 +53,11 @@ OnePlay read_onepaly(const char *info, const OnePlay& lastplay, Cards cards) {
     }
 }
 
-static void dfs(int u, Cards &cards, std::vector<OnePlay> &ret, const OnePlay& lastplay) {
+static void dfs(int u, Cards &cards, std::vector<OnePlay> &ret) {
     if (u == 0) {
         try {
             OnePlay oneplay(cards);
-            if (oneplay.follow(lastplay)) ret.push_back(oneplay);
+            ret.push_back(oneplay);
         }
         catch (const char *) {}
         return;
@@ -65,14 +65,25 @@ static void dfs(int u, Cards &cards, std::vector<OnePlay> &ret, const OnePlay& l
     int cu = cards[u];
     for (int i = 0; i <= cu; i++) {
         cards[u] = i;
-        dfs(u - 1, cards, ret, lastplay);
+        dfs(u - 1, cards, ret);
     }
 }
 
 std::vector<OnePlay> get_all_follow(Cards cards, const OnePlay & lastplay) {
+    static std::unordered_map<size_t, std::vector<OnePlay>> cache;
+    const size_t h = std::hash<std::string>{}(cards.to_string());
+    std::vector<OnePlay> t_ret;
+    if (cache.count(h)) {
+        t_ret = cache[h];
+    } else {
+        dfs(15, cards, t_ret);
+        std::sort(t_ret.begin(), t_ret.end());
+        cache[h] = t_ret;
+    }
     std::vector<OnePlay> ret;
-    dfs(15, cards, ret, lastplay);
-    std::sort(ret.begin(), ret.end());
+    for (const OnePlay &oneplay: t_ret) {
+        if (oneplay.follow(lastplay)) ret.push_back(oneplay);
+    }
     return ret;
 }
 
